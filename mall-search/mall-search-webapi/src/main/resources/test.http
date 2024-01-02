@@ -1,0 +1,12 @@
+### URL多字段查询(查询名字包含小米,或者描述包含笔记本的记录)
+POST http://192.168.144.160:9200/cool_shark_mall_index2/_search
+Content-Type: application/json
+
+{
+  "query": {"bool": {
+      "should": [
+        {"match": {"name": "小米"}},
+        {"match": {"description": "笔记本"}
+        }]
+    }}
+}

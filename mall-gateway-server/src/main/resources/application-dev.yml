@@ -1,0 +1,23 @@
+my:
+  server:
+    addr: 192.168.144.160
+# 日志显示级别
+logging:
+  level:
+    cn.tedu.mall: trace
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    nacos:
+      config:
+        server-addr: ${my.server.addr}:8848
+        group: DEFAULT_GROUP
+        file-extension: yml
+      discovery:
+        server-addr: ${my.server.addr}:8848
+    gateway:
+      discovery:
+        #动态路由,发现的服务都会自动添加到路由中
+        locator:
+          enabled: true

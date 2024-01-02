@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.mall.seckill.mapper.SeckillSpuMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.tedu.mall.pojo.seckill.model.SeckillSpu">
+        <id column="id" property="id"/>
+        <result column="spu_id" property="spuId"/>
+        <result column="list_price" property="listPrice"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+    </resultMap>
+    <!--查询秒杀spu列表的sql片段-->
+    <sql id="SimpleFields">
+        <if test="true">
+            id,
+            spu_id,
+            list_price,
+            start_time,
+            end_time,
+            gmt_create,
+            gmt_modified
+        </if>
+    </sql>
+
+    <select id="findSeckillSpus" resultType="cn.tedu.mall.pojo.seckill.model.SeckillSpu">
+        SELECT
+        <include refid="SimpleFields"/>
+        FROM
+        mall_seckill.seckill_spu
+    </select>
+
+    <select id="findSeckillSpusByTime" resultType="cn.tedu.mall.pojo.seckill.model.SeckillSpu">
+        SELECT
+        <include refid="SimpleFields"/>
+        FROM
+        mall_seckill.seckill_spu
+        WHERE start_time &lt; #{time}
+        AND end_time > #{time}
+    </select>
+
+    <select id="findAllSeckillSpuIds" resultType="long">
+        SELECT spu_id
+        FROM mall_seckill.seckill_spu
+    </select>
+
+    <select id="findSeckillSpuBySpuId" resultType="cn.tedu.mall.pojo.seckill.model.SeckillSpu">
+        SELECT
+        <include refid="SimpleFields"/>
+        FROM
+        mall_seckill.seckill_spu
+        WHERE spu_id = #{spuId}
+    </select>
+</mapper>
